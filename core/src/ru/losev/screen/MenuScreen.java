@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import ru.losev.base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
+
+    private static float V_LEN = 0.5f;
+
     private SpriteBatch batch;
     private float speed;
     private Texture logo;
@@ -44,6 +47,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+
         move(delta);
 
         batch.begin();
@@ -55,19 +59,34 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void move(float delta){
-        movement.set(0, 0);
+        if(isManual){
+            moveManual(delta);
+        }
+        else{
+            moveToTarget(delta);
+        }
+    }
 
-        if(!isManual){
-            movement = targetPosition.cpy().sub(logoPosition);
-        }
-        else {
-            movement.x = left ? -1 : right ? 1 : 0;
-            movement.y = up ? 1 : down ? -1 : 0;
-        }
+    private void moveManual(float delta){
+        movement.x = left ? -1 : right ? 1 : 0;
+        movement.y = up ? 1 : down ? -1 : 0;
 
         movement.nor();
         movement.scl(speed * delta);
         logoPosition.add(movement);
+    }
+
+    private void moveToTarget(float delta){
+        movement.set(targetPosition);
+
+        if(movement.sub(logoPosition).len() <= V_LEN){
+            logoPosition.set(targetPosition);
+        }
+        else{
+            movement.setLength(V_LEN);
+            movement.scl(speed * delta);
+            logoPosition.add(movement);
+        }
     }
 
     @Override
