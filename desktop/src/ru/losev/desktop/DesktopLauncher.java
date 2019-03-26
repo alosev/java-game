@@ -7,6 +7,14 @@ import ru.losev.StarGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new StarGame(), config);
+		modifyConfig(config);
+		new LwjglApplication(new StarGame(false), config);
+	}
+
+	private static void modifyConfig(LwjglApplicationConfiguration config) {
+		float aspect = 3f / 4f;
+		config.width = 400;
+		config.height = (int) (config.width / aspect);
+		config.resizable = false;
 	}
 }

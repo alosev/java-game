@@ -33,6 +33,7 @@ public class BadLogic extends Sprite {
         }
     }
 
+    @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         this.touch.set(touch);
         v.set(this.touch).sub(position).setLength(V_LEN);
