@@ -5,16 +5,22 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.losev.math.Rect;
+import ru.losev.utils.Regions;
 
 public class Sprite extends Rect {
 
     private float scale = 1f;
     private float angle;
-    private TextureRegion[] regions;
-    private int frame;
+    protected TextureRegion[] regions;
+    protected int frame;
+    private boolean isDestroyed;
 
     public Sprite(TextureRegion... regions) {
         this.regions = regions;
+    }
+
+    public Sprite(TextureRegion region, int cols, int rows, int frames){
+        this.regions = Regions.split(region, cols, rows, frames);
     }
 
     public void update(float delta){
@@ -61,12 +67,16 @@ public class Sprite extends Rect {
         this.angle = angle;
     }
 
-    public int getFrame() {
-        return frame;
+    public void destroy(){
+        isDestroyed = true;
     }
 
-    public void setFrame(int frame) {
-        this.frame = frame;
+    public void flushDestroy(){
+        isDestroyed = false;
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 
     public void setHeightProportion(float height){
