@@ -30,7 +30,7 @@ public abstract class BaseScreen extends InputAdapter implements Screen {
     private boolean isInit = false;
 
     private Rect screenBounds; // границы области рисования в px
-    private Rect worldBounds; // границы проекции в мировых координатах
+    protected Rect worldBounds; // границы проекции в мировых координатах
     private Rect glBounds; // квадрат OpenGL
 
     private Matrix4 worldToGl;

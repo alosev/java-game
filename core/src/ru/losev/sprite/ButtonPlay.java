@@ -2,6 +2,8 @@ package ru.losev.sprite;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
+import ru.losev.base.ScaledButton;
 import ru.losev.math.Rect;
 import ru.losev.screen.GameScreen;
 
