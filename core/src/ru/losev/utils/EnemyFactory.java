@@ -1,6 +1,7 @@
 package ru.losev.utils;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -47,6 +48,8 @@ public class EnemyFactory {
     private float factoryCoolDown;
     private float timer;
 
+    private int level;
+
     private TextureRegion bulletRegion;
 
     public EnemyFactory(TextureAtlas atlas, Rect worldBounds, EnemyPool enemyPool) {
@@ -64,7 +67,8 @@ public class EnemyFactory {
         factoryCoolDown = 2f;
     }
 
-    public void generate(float delta){
+    public void generate(float delta, int score){
+        level = score / 10 + 1;
         timer += delta;
 
         if(timer >= factoryCoolDown){
@@ -84,41 +88,31 @@ public class EnemyFactory {
 
 
     private void generateSmallEnemyShip(){
-        Enemy enemy =
-                enemyPool.obtain()
-                        .setTexture(smallRegions)
-                        .setSize(SMALL_HEIGHT)
-                        .setSpeed(SMALL_SPEED)
-                        .setHealth(SMALL_HEALTH)
-                        .setBulletParams(bulletRegion, bulletVelocity, SMALL_BULLET_SPEED, SMALL_BULLET_HEIGHT, SMALL_BULLET_DAMAGE, SMALL_BULLET_COOLDOWN);
-
-        enemy.position.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
-        enemy.setTop(worldBounds.getTop());
+        generateEmenyShip(smallRegions, SMALL_HEIGHT, SMALL_SPEED, SMALL_HEALTH, SMALL_BULLET_SPEED, SMALL_BULLET_HEIGHT, SMALL_BULLET_DAMAGE, SMALL_BULLET_COOLDOWN);
     }
 
     private void generateMediumEnemyShip(){
+        generateEmenyShip(mediumRegions, MEDIUM_HEIGHT, MEDIUM_SPEED, MEDIUM_HEALTH, MEDIUM_BULLET_SPEED, MEDIUM_BULLET_HEIGHT, MEDIUM_BULLET_DAMAGE, MEDIUM_BULLET_COOLDOWN);
+    }
+
+    private void generateBigEnemyShip(){
+        generateEmenyShip(bigRegions, BIG_HEIGHT, BIG_SPEED, BIG_HEALTH, BIG_BULLET_SPEED, BIG_BULLET_HEIGHT, BIG_BULLET_DAMAGE, BIG_BULLET_COOLDOWN);
+    }
+
+    private void generateEmenyShip(TextureRegion[] texture, float height, float speed, int health, float bulletSpeed, float bulletHeight, int bulletDamage, float bulletCoolDown){
         Enemy enemy =
                 enemyPool.obtain()
-                        .setTexture(mediumRegions)
-                        .setSize(MEDIUM_HEIGHT)
-                        .setSpeed(MEDIUM_SPEED)
-                        .setHealth(MEDIUM_HEALTH)
-                        .setBulletParams(bulletRegion, bulletVelocity, MEDIUM_BULLET_SPEED, MEDIUM_BULLET_HEIGHT, MEDIUM_BULLET_DAMAGE, MEDIUM_BULLET_COOLDOWN);
+                        .setTexture(texture)
+                        .setSize(height)
+                        .setSpeed(speed)
+                        .setHealth(health)
+                        .setBulletParams(bulletRegion, bulletVelocity, bulletSpeed, bulletHeight, bulletDamage * level, bulletCoolDown);
 
         enemy.position.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
         enemy.setTop(worldBounds.getTop());
     }
 
-    private void generateBigEnemyShip(){
-        Enemy enemy =
-                enemyPool.obtain()
-                        .setTexture(bigRegions)
-                        .setSize(BIG_HEIGHT)
-                        .setSpeed(BIG_SPEED)
-                        .setHealth(BIG_HEALTH)
-                        .setBulletParams(bulletRegion, bulletVelocity, BIG_BULLET_SPEED, BIG_BULLET_HEIGHT, BIG_BULLET_DAMAGE, BIG_BULLET_COOLDOWN);
-
-        enemy.position.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
-        enemy.setTop(worldBounds.getTop());
+    public int getLevel() {
+        return level;
     }
 }

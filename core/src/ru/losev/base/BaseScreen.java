@@ -20,6 +20,7 @@ import ru.losev.math.MatrixUtils;
 import ru.losev.math.Rect;
 import ru.losev.sprite.Background;
 import ru.losev.sprite.Star;
+import ru.losev.sprite.TrackingStar;
 
 public abstract class BaseScreen extends InputAdapter implements Screen {
 
@@ -41,7 +42,7 @@ public abstract class BaseScreen extends InputAdapter implements Screen {
     private Background background;
     private Texture backgroundTexture;
 
-    private ArrayList<Star> stars;
+    protected ArrayList<TrackingStar> stars;
     private TextureAtlas atlas;
     private Game game;
 
@@ -73,9 +74,9 @@ public abstract class BaseScreen extends InputAdapter implements Screen {
         background = new Background(new TextureRegion(backgroundTexture));
 
         atlas = new TextureAtlas("textures/menuAtlas.tpack");
-        stars = new ArrayList<Star>(STAR_COUNT);
+        stars = new ArrayList<TrackingStar>(STAR_COUNT);
         for(int i = 0; i < STAR_COUNT; i++ ){
-            stars.add(new Star(atlas));
+            stars.add(new TrackingStar(atlas));
         }
 
         Gdx.input.setInputProcessor(this);

@@ -69,6 +69,7 @@ public class Ship extends Sprite {
         damageAnimationTimer = 0f;
         health -= damage;
         if(health <= 0){
+            health = 0;
             destroy();
         }
     }
@@ -100,5 +101,9 @@ public class Ship extends Sprite {
 
     public void boom(){
         explosionPool.obtain().setSize(getHeight()).setPosition(position);
+    }
+
+    public Vector2 getV() {
+        return v;
     }
 }

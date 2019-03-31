@@ -39,7 +39,7 @@ public class Player extends Ship {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
 
-        health = 50;
+        health = 100;
     }
 
     @Override
