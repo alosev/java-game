@@ -1,6 +1,5 @@
 package ru.losev.sprite;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,7 +9,7 @@ import ru.losev.math.Rnd;
 
 public class Star extends Sprite {
 
-    private Vector2 v;
+    protected Vector2 velocity;
     private Rect worldBounds;
 
     public Star(TextureAtlas atlas) {
@@ -19,15 +18,15 @@ public class Star extends Sprite {
         float vX = Rnd.nextFloat(-0.02f, 0.02f);
         float vY = Rnd.nextFloat(-0.5f, -0.1f);
 
-        v = new Vector2(vX, vY);
+        velocity = new Vector2(vX, vY);
 
         setHeightProportion(0.01f);
     }
 
     @Override
     public void update(float delta) {
+        position.mulAdd(velocity, delta);
         checkAndHandleBounds();
-        position.mulAdd(v, delta);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class Star extends Sprite {
         position.set(posX, posY);
     }
 
-    private void checkAndHandleBounds(){
+    protected void checkAndHandleBounds(){
         if(getRight() < worldBounds.getLeft()){
             setLeft(worldBounds.getRight());
         }

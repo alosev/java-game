@@ -3,6 +3,7 @@ package ru.losev.sprite;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import ru.losev.base.ScaledButton;
 import ru.losev.math.Rect;
 
 public class ButtonExit extends ScaledButton {
